@@ -1,12 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import { Track, TrackDocument } from './schemas/track.schema'
+import { Comment, CommentDocument } from './schemas/comment.schema'
+import { Model } from 'mongoose'
 
 @Injectable()
 export class TrackService {
-  async create() {}
+    constructor(
+        @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
+        @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
+    ) {}
 
-  async getAll() {}
+    async create() {}
 
-  async getOne() {}
+    async getAll() {}
 
-  async delete() {}
+    async getOne() {}
+
+    async delete() {}
 }
