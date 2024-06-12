@@ -26,5 +26,6 @@ module.exports = {
         'unused-imports/no-unused-imports': 'error',
         'react/jsx-max-props-per-line': ['error', { maximum: 4 }],
         'prettier/prettier': 'off',
+        '@typescript-eslint/no-unused-vars': 'warn',
     },
 }
