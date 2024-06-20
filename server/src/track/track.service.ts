@@ -2,24 +2,51 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Track, TrackDocument } from './schemas/track.schema'
 import { Comment, CommentDocument } from './schemas/comment.schema'
-import { Model, ObjectId } from 'mongoose'
+import { Model, ObjectId, Types } from 'mongoose'
 import { CreateTrackDto } from './dto/create-track.dto'
 import { CreateCommentDto } from './dto/create-comment.dto'
+import { FileService, FileType } from 'src/file/file.service'
 
 @Injectable()
 export class TrackService {
     constructor(
         @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
         @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
+        private fileService: FileService,
     ) {}
 
-    async create(dto: CreateTrackDto): Promise<Track> {
-        const track = await this.trackModel.create({ ...dto, listens: 0 })
+    async create(dto: CreateTrackDto, picture, audio): Promise<Track> {
+        const audioPath = this.fileService.createFile(
+            FileType.AUDIO,
+            audio,
+            dto.artist.toString(),
+        )
+        const picturePath = this.fileService.createFile(
+            FileType.IMAGE,
+            picture,
+            dto.artist.toString(),
+        )
+        const track = await this.trackModel.create({
+            ...dto,
+            listens: 0,
+            audio: audioPath,
+            picture: picturePath,
+        })
         return track
     }
 
-    async getAll(): Promise<Track[]> {
-        const tracks = await this.trackModel.find()
+    async getAll(count = 10, offset = 0): Promise<Track[]> {
+        const tracks = await this.trackModel
+            .find()
+            .skip(Number(offset))
+            .limit(Number(count))
+        return tracks
+    }
+
+    async search(query: string): Promise<Track[]> {
+        const tracks = await this.trackModel.find({
+            name: { $regex: new RegExp(query, 'i') },
+        })
         return tracks
     }
 
@@ -28,9 +55,32 @@ export class TrackService {
         return track
     }
 
-    async delete(id: ObjectId): Promise<ObjectId> {
+    async delete(id: ObjectId): Promise<Types.ObjectId | { error: string }> {
         const track = await this.trackModel.findByIdAndDelete(id)
-        return id
+
+        try {
+            if (track.audio) {
+                await this.fileService.removeFile(
+                    track.artist.toString(),
+                    track.audio,
+                )
+            }
+            if (track.picture) {
+                await this.fileService.removeFile(
+                    track.artist.toString(),
+                    track.picture,
+                )
+            }
+            if (track.comments) {
+                track.comments.forEach(
+                    async (comment) =>
+                        await this.commentModel.findByIdAndDelete(comment),
+                )
+            }
+        } catch (e) {
+            return { error: e.message }
+        }
+        return track._id
     }
 
     async addComment(dto: CreateCommentDto): Promise<Comment> {
@@ -39,5 +89,11 @@ export class TrackService {
         track.comments.push(comment._id)
         await track.save()
         return comment
+    }
+
+    async listen(id: ObjectId) {
+        const track = await this.trackModel.findById(id)
+        track.listens += 1
+        track.save()
     }
 }
