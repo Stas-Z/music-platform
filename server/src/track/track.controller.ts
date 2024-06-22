@@ -47,6 +47,11 @@ export class TrackController {
         return this.trackService.getOne(id)
     }
 
+    @Get('/artist/:id')
+    getByArtist(@Param('id') id: ObjectId) {
+        return this.trackService.getByArtist(id)
+    }
+
     @Delete(':id')
     delete(@Param('id') id: ObjectId) {
         return this.trackService.delete(id)

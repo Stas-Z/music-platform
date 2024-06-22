@@ -6,6 +6,7 @@ import { FileModule } from './file/file.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import * as path from 'path'
 import { ArtistModule } from './artist/artist.module'
+import { AlbumModule } from './album/album.module'
 
 @Module({
     imports: [
@@ -14,6 +15,7 @@ import { ArtistModule } from './artist/artist.module'
         }),
         ArtistModule,
         TrackModule,
+        AlbumModule,
         MongooseModule.forRoot(
             `mongodb+srv://${username}:${password}@music-platform.l9gt49x.mongodb.net/?retryWrites=true&w=majority&appName=music-platform`,
         ),
