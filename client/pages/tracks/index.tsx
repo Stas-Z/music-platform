@@ -14,9 +14,9 @@ const Index = () => {
             artist: 'Исполнитель 1',
             text: 'Какой то текст',
             listens: 5,
-            audio: 'http://localhost:5000/66769f704292af4ccf67de40/audio/953da90a-0c9c-41eb-8b28-fd41adc69e76.mp3',
+            audio: 'http://localhost:5000/66769f704292af4ccf67de40/audio/22cd24b0-6489-4c08-a093-fcce69f0267c.mp3',
             picture:
-                'http://localhost:5000/66769f704292af4ccf67de40/image/8d99c1b7-559d-431a-a4c4-385f041bd3c3.jpg',
+                'http://localhost:5000/66769f704292af4ccf67de40/image/0670f285-6757-46b2-8297-9c15dd7e3cb9.jpg',
             comments: [],
         },
         {
@@ -25,9 +25,9 @@ const Index = () => {
             artist: 'Исполнитель 1',
             text: 'Какой то текст',
             listens: 5,
-            audio: 'http://localhost:5000/66769f704292af4ccf67de40/audio/953da90a-0c9c-41eb-8b28-fd41adc69e76.mp3',
+            audio: 'http://localhost:5000/66769f704292af4ccf67de40/audio/22cd24b0-6489-4c08-a093-fcce69f0267c.mp3',
             picture:
-                'http://localhost:5000/66769f704292af4ccf67de40/image/8d99c1b7-559d-431a-a4c4-385f041bd3c3.jpg',
+                'http://localhost:5000/66769f704292af4ccf67de40/image/0670f285-6757-46b2-8297-9c15dd7e3cb9.jpg',
             comments: [],
         },
         {
@@ -36,9 +36,9 @@ const Index = () => {
             artist: 'Исполнитель 1',
             text: 'Какой то текст',
             listens: 5,
-            audio: 'http://localhost:5000/66769f704292af4ccf67de40/audio/953da90a-0c9c-41eb-8b28-fd41adc69e76.mp3',
+            audio: 'http://localhost:5000/66769f704292af4ccf67de40/audio/22cd24b0-6489-4c08-a093-fcce69f0267c.mp3',
             picture:
-                'http://localhost:5000/66769f704292af4ccf67de40/image/8d99c1b7-559d-431a-a4c4-385f041bd3c3.jpg',
+                'http://localhost:5000/66769f704292af4ccf67de40/image/0670f285-6757-46b2-8297-9c15dd7e3cb9.jpg',
             comments: [],
         },
     ]

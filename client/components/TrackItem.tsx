@@ -4,6 +4,7 @@ import { Card, Grid, IconButton } from '@mui/material'
 import cls from '../styles/TrackItem.module.scss'
 import { Delete, Pause, PlayArrow } from '@mui/icons-material'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 interface TrackItemProps {
     track: ITrack
@@ -20,7 +21,12 @@ export const TrackItem = ({ track, active = false }: TrackItemProps) => {
             <IconButton onClick={(e) => e.stopPropagation()}>
                 {active ? <Pause /> : <PlayArrow />}
             </IconButton>
-            <img width={70} height={70} src={track.picture} />
+            <Image
+                width={70}
+                height={70}
+                src={track.picture}
+                alt={track.name}
+            />
             <Grid container direction={'column'} className={cls.rightBlock}>
                 <div>{track.name}</div>
                 <div className={cls.artist}>{track.artist}</div>
