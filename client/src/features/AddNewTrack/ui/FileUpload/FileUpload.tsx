@@ -1,4 +1,10 @@
-import React, { MutableRefObject, ReactNode, useCallback, useRef } from 'react'
+import React, {
+    memo,
+    MutableRefObject,
+    ReactNode,
+    useCallback,
+    useRef,
+} from 'react'
 
 interface FileUploadProps {
     setFile: (file: File) => void
@@ -31,4 +37,4 @@ const FileUpload = ({ setFile, accept, children }: FileUploadProps) => {
     )
 }
 
-export default FileUpload
+export default memo(FileUpload)

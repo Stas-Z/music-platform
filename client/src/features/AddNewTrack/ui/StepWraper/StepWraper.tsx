@@ -1,6 +1,6 @@
 import { Card, Container, Grid, Step, StepLabel, Stepper } from '@mui/material'
-import React, { ReactNode } from 'react'
-import cls from '@/styles/StepWraper.module.scss'
+import React, { memo, ReactNode } from 'react'
+import cls from './StepWraper.module.scss'
 
 interface StepWraperProps {
     activeStep: number
@@ -29,4 +29,4 @@ const StepWraper = ({ activeStep, children }: StepWraperProps) => {
     )
 }
 
-export default StepWraper
+export default memo(StepWraper)

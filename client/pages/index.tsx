@@ -1,15 +1,3 @@
-import React from 'react'
-import cls from '../styles/index.module.scss'
+import { MainPage } from '@/src/pages/MainPage'
 
-const Index = () => {
-    return (
-        <>
-            <div className={cls.center}>
-                <h1>Добро ожаловать!</h1>
-                <h3>Здесь собраны лучшие треки.</h3>
-            </div>
-        </>
-    )
-}
-
-export default Index
+export default MainPage

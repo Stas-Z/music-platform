@@ -1,5 +1,5 @@
-import React from 'react'
-import FileUpload from './FileUpload'
+import { memo } from 'react'
+import FileUpload from '../FileUpload/FileUpload'
 import { Button } from '@mui/material'
 
 interface StepNextProps {
@@ -18,4 +18,4 @@ const StepNext = ({ fileFormat, label, setFile }: StepNextProps) => {
     )
 }
 
-export default StepNext
+export default memo(StepNext)

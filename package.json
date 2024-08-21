@@ -1,5 +1,9 @@
 {
-  "devDependencies": {
-    "eslint-plugin-unused-imports": "^4.0.0"
-  }
+    "scripts": {
+        "start:dev": "concurrently \"npm --prefix ./client/ run start:dev\" \"npm --prefix ./server/ run start:dev\""
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2",
+        "eslint-plugin-unused-imports": "^4.0.0"
+    }
 }

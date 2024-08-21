@@ -1,21 +1,18 @@
-import { ITrack } from '@/types/track'
 import { Box, Grid } from '@mui/material'
-import React from 'react'
-import { TrackItem } from './TrackItem'
+import { ITrack } from '../../model/types/track'
+import { TrackListItem } from '../TackListItem/TackListItem'
 
 interface TrackListProps {
     tracks: ITrack[]
 }
-const TrackList = ({ tracks }: TrackListProps) => {
+export const TrackList = ({ tracks }: TrackListProps) => {
     return (
         <Grid container direction="column">
             <Box p={2}>
                 {tracks.map((track) => {
-                    return <TrackItem key={track._id} track={track} />
+                    return <TrackListItem key={track._id} track={track} />
                 })}
             </Box>
         </Grid>
     )
 }
-
-export default TrackList

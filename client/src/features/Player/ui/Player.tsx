@@ -1,9 +1,8 @@
-import React from 'react'
 import { Pause, PlayArrow, VolumeUp } from '@mui/icons-material'
 import { Grid, IconButton } from '@mui/material'
-import cls from '../styles/Player.module.scss'
-import { ITrack } from '@/types/track'
-import ProgressBar from './ProgressBar'
+import cls from './Player.module.scss'
+import { ITrack } from '@/src/entities/Track'
+import ProgressBar from '@/src/shared/ui/ProgressBar/ProgressBar'
 
 const Player = () => {
     const track: ITrack = {

@@ -1,19 +1,19 @@
-import Navbar from '@/components/Navbar'
 import { Container } from '@mui/material'
 import React, { ReactNode } from 'react'
-import cls from '@/styles/MainLayout.module.scss'
-import Player from '@/components/Player'
+import cls from './MainLayout.module.scss'
 
 interface MainLayoutProps {
     children: ReactNode
+    navbar: ReactNode
+    player: ReactNode
 }
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const MainLayout = ({ children, navbar, player }: MainLayoutProps) => {
     return (
         <>
-            <Navbar />
+            {navbar}
             <Container className={cls.container}>{children}</Container>
-            <Player />
+            {player}
         </>
     )
 }

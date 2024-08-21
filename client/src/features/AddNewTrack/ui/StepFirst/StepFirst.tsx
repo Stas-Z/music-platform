@@ -1,6 +1,6 @@
 import { Grid, TextField } from '@mui/material'
-import React from 'react'
-import cls from '../styles/Steps.module.scss'
+import cls from './StepFirst.module.scss'
+import { memo } from 'react'
 
 const StepFirst = () => {
     return (
@@ -17,4 +17,4 @@ const StepFirst = () => {
     )
 }
 
-export default StepFirst
+export default memo(StepFirst)

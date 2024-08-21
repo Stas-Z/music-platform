@@ -1,4 +1,4 @@
-import cls from '../styles/ProgressBar.module.scss'
+import cls from './ProgressBar.module.scss'
 
 interface TrackProgressProps {
     left: number

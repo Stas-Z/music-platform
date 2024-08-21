@@ -1,17 +1,19 @@
-import React from 'react'
-import { ITrack } from '@/types/track'
+import { ITrack } from '../../model/types/track'
 import { Card, Grid, IconButton } from '@mui/material'
-import cls from '../styles/TrackItem.module.scss'
+import cls from './TrackListItem.module.scss'
 import { Delete, Pause, PlayArrow } from '@mui/icons-material'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 
-interface TrackItemProps {
+interface TrackListItemProps {
     track: ITrack
     active?: boolean
 }
 
-export const TrackItem = ({ track, active = false }: TrackItemProps) => {
+export const TrackListItem = ({
+    track,
+    active = false,
+}: TrackListItemProps) => {
     const router = useRouter()
     return (
         <Card
