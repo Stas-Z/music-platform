@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
@@ -18,6 +17,7 @@ import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
 import { useRouter } from 'next/router'
+import { memo, useState } from 'react'
 
 const drawerWidth = 240
 
@@ -57,10 +57,10 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }))
 
-export const Navbar = () => {
+export const Navbar = memo(() => {
     const route = useRouter()
     const theme = useTheme()
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = useState(false)
 
     const handleDrawerOpen = () => {
         setOpen(true)
@@ -135,4 +135,5 @@ export const Navbar = () => {
             </Drawer>
         </Box>
     )
-}
+})
+Navbar.displayName = 'Navbar'

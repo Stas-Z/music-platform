@@ -1,36 +1,119 @@
 import { Pause, PlayArrow, VolumeUp } from '@mui/icons-material'
 import { Grid, IconButton } from '@mui/material'
 import cls from './Player.module.scss'
-import { ITrack } from '@/src/entities/Track'
-import ProgressBar from '@/src/shared/ui/ProgressBar/ProgressBar'
+import { ProgressBar } from '@/src/shared/ui/ProgressBar'
+import { ChangeEvent, memo, useCallback, useEffect } from 'react'
+import { useTrackActions } from '@/src/entities/Track'
+import { useAppSelector } from '@/src/shared/lib/hooks/useAppSelector/useAppSelector'
+import {
+    getActiveTrack,
+    getCurrentTime,
+    getDuration,
+    getPause,
+    getVolume,
+} from '@/src/entities/Track/model/selectors/getTrack'
 
-const Player = () => {
-    const track: ITrack = {
-        _id: '1',
-        name: 'Трек 1',
-        artist: 'Исполнитель 1',
-        text: 'Какой то текст',
-        listens: 5,
-        audio: 'http://localhost:5000/66769f704292af4ccf67de40/audio/22cd24b0-6489-4c08-a093-fcce69f0267c.mp3',
-        picture:
-            'http://localhost:5000/66769f704292af4ccf67de40/image/cad7f070-16d7-4dd4-af4d-0a643a72c0a8.jpg',
-        comments: [],
+let audio: HTMLAudioElement
+
+export const Player = memo(() => {
+    // const {
+    //     // activeTrack,
+    //     // currentTime,
+    //     // duration,
+    //     // pause,
+    //     // volume,
+    // } = useTrackValue()
+
+    const activeTrack = useAppSelector(getActiveTrack)
+    const currentTime = useAppSelector(getCurrentTime)
+    const duration = useAppSelector(getDuration)
+    const pause = useAppSelector(getPause)
+    const volume = useAppSelector(getVolume)
+
+    const { setCurrentTime, setDuration, setPause, setPlay, setVolume } =
+        useTrackActions()
+
+    useEffect(() => {
+        if (!audio) {
+            audio = new Audio()
+        } else {
+            if (activeTrack) {
+                setAudio()
+                playHandle()
+            }
+        }
+    }, [activeTrack])
+
+    useEffect(() => {
+        if (pause) {
+            audio.pause()
+        } else {
+            audio.play()
+        }
+    }, [pause])
+
+    const setAudio = useCallback(() => {
+        if (activeTrack) {
+            audio.src = 'http://localhost:5000/' + activeTrack.audio
+            audio.volume = volume / 100
+            audio.onloadedmetadata = () => {
+                setDuration(Math.ceil(audio.duration))
+            }
+            audio.ontimeupdate = () => {
+                setCurrentTime(Math.ceil(audio.currentTime))
+            }
+        }
+    }, [activeTrack])
+
+    const playHandle = useCallback(() => {
+        if (!audio || !activeTrack) return
+
+        if (pause) {
+            setPlay()
+            audio.play()
+        } else {
+            setPause()
+            audio.pause()
+        }
+    }, [activeTrack, pause, setPause, setPlay])
+
+    const volumeHandle = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            audio.volume = Number(e.target.value) / 100
+            setVolume(Number(e.target.value))
+        },
+        [setVolume],
+    )
+
+    const currentTimeHandle = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            audio.currentTime = Number(e.target.value)
+            setCurrentTime(Number(e.target.value))
+        },
+        [setCurrentTime],
+    )
+    if (!activeTrack) {
+        return null
     }
-    const active = false
+
     return (
         <div className={cls.player}>
-            <IconButton onClick={(e) => e.stopPropagation()}>
-                {active ? <Pause /> : <PlayArrow />}
+            <IconButton onClick={playHandle}>
+                {pause ? <PlayArrow /> : <Pause />}
             </IconButton>
             <Grid container direction={'column'} className={cls.rightBlock}>
-                <div>{track.name}</div>
-                <div className={cls.artist}>{track.artist}</div>
+                <div>{activeTrack?.name}</div>
+                <div className={cls.artist}>{activeTrack?.artist}</div>
             </Grid>
-            <ProgressBar left={0} right={100} onChanged={() => {}} />
+            <ProgressBar
+                left={currentTime}
+                right={duration}
+                onChanged={currentTimeHandle}
+                timer
+            />
             <VolumeUp className={cls.volume} />
-            <ProgressBar left={0} right={100} onChanged={() => {}} />
+            <ProgressBar left={volume} right={100} onChanged={volumeHandle} />
         </div>
     )
-}
-
-export default Player
+})
+Player.displayName = 'Player'

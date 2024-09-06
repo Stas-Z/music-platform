@@ -5,7 +5,7 @@ import cls from './MainLayout.module.scss'
 interface MainLayoutProps {
     children: ReactNode
     navbar: ReactNode
-    player: ReactNode
+    player?: ReactNode
 }
 
 const MainLayout = ({ children, navbar, player }: MainLayoutProps) => {

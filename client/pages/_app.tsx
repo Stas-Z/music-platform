@@ -1,12 +1,18 @@
-import Player from '@/src/features/Player/ui/Player'
+import { StoreProvider, wrapper } from '@/src/app/providers/StoreProvider'
+import { Player } from '@/src/features/Player'
 import MainLayout from '@/src/shared/layouts/MainLayout/MainLayout'
 import { Navbar } from '@/src/widgets/Navbar/ui/Navbar'
 import { AppProps } from 'next/app'
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, ...rest }: AppProps) {
+    const { store, props } = wrapper.useWrappedStore(rest)
+
     return (
-        <MainLayout navbar={<Navbar />} player={<Player />}>
-            <Component {...pageProps} />
-        </MainLayout>
+        <StoreProvider store={store}>
+            <MainLayout navbar={<Navbar />} player={<Player />}>
+                <Component {...props.pageProps} />
+            </MainLayout>
+        </StoreProvider>
     )
 }
+export default MyApp
