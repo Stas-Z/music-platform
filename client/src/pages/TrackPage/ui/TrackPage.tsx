@@ -7,7 +7,7 @@ import { getTrackList } from '../model/selectors/getTrack'
 import { useAppSelector } from '@/src/shared/lib/hooks/useAppSelector/useAppSelector'
 
 const TackPage = () => {
-    const route = useRouter()
+    const router = useRouter()
 
     const tracks = useAppSelector(getTrackList)
 
@@ -17,7 +17,7 @@ const TackPage = () => {
                 <Box p={3}>
                     <Grid container justifyContent="space-between">
                         <h1>Список треков</h1>
-                        <Button onClick={() => route.push('/tracks/create')}>
+                        <Button onClick={() => router.push('/tracks/create')}>
                             Загрузить
                         </Button>
                     </Grid>

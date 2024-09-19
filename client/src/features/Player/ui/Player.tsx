@@ -12,12 +12,11 @@ import {
     getPause,
     getVolume,
 } from '@/src/entities/Track/model/selectors/getTrack'
+import { getApiURL } from '@/src/shared/lib/helpers/getApiURL/getApiURL'
 
 let audio: HTMLAudioElement
 
 export const Player = memo(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL
-
     const activeTrack = useAppSelector(getActiveTrack)
     const currentTime = useAppSelector(getCurrentTime)
     const duration = useAppSelector(getDuration)
@@ -48,7 +47,7 @@ export const Player = memo(() => {
 
     const setAudio = useCallback(() => {
         if (activeTrack) {
-            audio.src = apiUrl + activeTrack.audio
+            audio.src = getApiURL(activeTrack.audio)
             audio.volume = volume / 100
             audio.onloadedmetadata = () => {
                 setDuration(Math.ceil(audio.duration))

@@ -10,10 +10,12 @@ import { createWrapper } from 'next-redux-wrapper'
 import { ThunkExtraArg } from './StateSchema'
 import { $api } from '@/src/shared/api/api'
 import { trackPageReducer, TrackPageSchema } from '@/src/pages/TrackPage'
+import { addTrackReducer } from '@/src/features/AddNewTrack/model/slices/addTrackSlice'
 
 const rootReducer = combineReducers({
     track: trackReducer,
     trackPage: trackPageReducer,
+    addTrack: addTrackReducer,
 })
 
 const extraArg: ThunkExtraArg = {

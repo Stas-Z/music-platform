@@ -3,27 +3,56 @@ import { memo, useCallback, useState } from 'react'
 import StepWraper from '../StepWraper/StepWraper'
 import StepFirst from '../StepFirst/StepFirst'
 import StepNext from '../StepNext/StepNext'
+import { useInput } from '@/src/shared/lib/hooks/useInput/useInput'
+import { addTrack } from '../../model/services/addTrack/addTrack'
+import { useAppDispatch } from '@/src/shared/lib/hooks/useAppDispatch/useAppDispatch'
+import { useRouter } from 'next/router'
 
 export const AddNewTrack = memo(() => {
     const [activeStep, setActiveStep] = useState(0)
+    const dispatch = useAppDispatch()
+    const router = useRouter()
 
     const [picture, setPicture] = useState<File | null>(null)
     const [audio, setAudio] = useState<File | null>(null)
+
+    const trackName = useInput('')
+    const artist = useInput('')
+    const text = useInput('')
 
     const back = useCallback(() => {
         setActiveStep((prev) => prev - 1)
     }, [])
 
-    const next = useCallback(() => {
+    const next = useCallback(async () => {
         if (activeStep !== 2) {
             setActiveStep((prev) => prev + 1)
+        } else {
+            const result = await dispatch(
+                addTrack({
+                    name: trackName.value,
+                    artist: artist.value,
+                    audio: audio as File,
+                    picture: picture as File,
+                    text: text.value,
+                }),
+            )
+            if (result.meta.requestStatus === 'fulfilled') {
+                router.push('/tracks')
+            }
         }
     }, [activeStep])
 
     return (
         <>
             <StepWraper activeStep={activeStep}>
-                {activeStep === 0 && <StepFirst />}
+                {activeStep === 0 && (
+                    <StepFirst
+                        trackName={trackName}
+                        artist={artist}
+                        text={text}
+                    />
+                )}
                 {activeStep === 1 && (
                     <StepNext
                         label="Загрузите изображение"
