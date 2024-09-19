@@ -16,13 +16,7 @@ import {
 let audio: HTMLAudioElement
 
 export const Player = memo(() => {
-    // const {
-    //     // activeTrack,
-    //     // currentTime,
-    //     // duration,
-    //     // pause,
-    //     // volume,
-    // } = useTrackValue()
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
     const activeTrack = useAppSelector(getActiveTrack)
     const currentTime = useAppSelector(getCurrentTime)
@@ -54,7 +48,7 @@ export const Player = memo(() => {
 
     const setAudio = useCallback(() => {
         if (activeTrack) {
-            audio.src = 'http://localhost:5000/' + activeTrack.audio
+            audio.src = apiUrl + activeTrack.audio
             audio.volume = volume / 100
             audio.onloadedmetadata = () => {
                 setDuration(Math.ceil(audio.duration))

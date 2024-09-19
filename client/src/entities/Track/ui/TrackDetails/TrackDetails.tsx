@@ -3,16 +3,19 @@ import { ITrack } from '../../model/types/track'
 import cls from './TrackDeatails.module.scss'
 import { memo } from 'react'
 import Image from 'next/image'
+import { getImageURL } from '@/src/shared/lib/helpers/getImageUrl/getImageUrl'
 
 interface TrackListProps {
     track: ITrack
 }
 export const TrackDetails = memo(({ track }: TrackListProps) => {
+    console.log('track: ', track)
+
     return (
         <>
             <Grid container className={cls.infoBlock}>
                 <Image
-                    src={track.picture}
+                    src={getImageURL(track.picture)}
                     alt={track.name}
                     width={200}
                     height={200}

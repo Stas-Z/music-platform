@@ -7,6 +7,7 @@ import { memo, MouseEvent, useCallback } from 'react'
 import { useTrackActions } from '../../model/slice/trackSlice'
 import Image from 'next/image'
 import { useTrackValue } from '../../model/selectors/getTrack'
+import { getImageURL } from '@/src/shared/lib/helpers/getImageUrl/getImageUrl'
 
 interface TrackListItemProps {
     track: ITrack
@@ -15,6 +16,8 @@ interface TrackListItemProps {
 
 export const TrackListItem = memo(
     ({ track, active = false }: TrackListItemProps) => {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL
+
         const router = useRouter()
         const { pause, activeTrack } = useTrackValue()
         const { setPause, setPlay, setActive } = useTrackActions()
@@ -50,7 +53,7 @@ export const TrackListItem = memo(
                 <Image
                     width={70}
                     height={70}
-                    src={'http://localhost:5000/' + track.picture}
+                    src={getImageURL(track.picture)}
                     alt={track.name}
                 />
                 <Grid container direction={'column'} className={cls.rightBlock}>
