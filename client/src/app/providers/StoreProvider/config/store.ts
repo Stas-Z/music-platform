@@ -11,9 +11,12 @@ import { ThunkExtraArg } from './StateSchema'
 import { $api } from '@/src/shared/api/api'
 import { trackPageReducer, TrackPageSchema } from '@/src/pages/TrackPage'
 import { addTrackReducer } from '@/src/features/AddNewTrack/model/slices/addTrackSlice'
+import { artistReducer } from '@/src/entities/Artist'
+import { ArtistSchema } from '@/src/entities/Artist/model/types/artist'
 
 const rootReducer = combineReducers({
     track: trackReducer,
+    artist: artistReducer,
     trackPage: trackPageReducer,
     addTrack: addTrackReducer,
 })
@@ -44,6 +47,7 @@ export interface HydrateAction
     extends Action<'__NEXT_REDUX_WRAPPER_HYDRATE__'> {
     payload: {
         trackPage: TrackPageSchema
+        artist: ArtistSchema
     }
 }
 

@@ -7,7 +7,7 @@ export interface IComment {
 export interface ITrack {
     _id: string
     name: string
-    artist: string
+    artistId: string
     text: string
     listens: number
     picture: string

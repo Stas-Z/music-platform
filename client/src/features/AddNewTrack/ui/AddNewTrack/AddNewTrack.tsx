@@ -7,17 +7,22 @@ import { useInput } from '@/src/shared/lib/hooks/useInput/useInput'
 import { addTrack } from '../../model/services/addTrack/addTrack'
 import { useAppDispatch } from '@/src/shared/lib/hooks/useAppDispatch/useAppDispatch'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
+import { getArtistList } from '@/src/entities/Artist/model/services/selectors/getArtistsSelectors'
 
 export const AddNewTrack = memo(() => {
     const [activeStep, setActiveStep] = useState(0)
+
     const dispatch = useAppDispatch()
     const router = useRouter()
 
+    const [artist, setArtist] = useState('')
     const [picture, setPicture] = useState<File | null>(null)
     const [audio, setAudio] = useState<File | null>(null)
 
+    const artists = useSelector(getArtistList)
+
     const trackName = useInput('')
-    const artist = useInput('')
     const text = useInput('')
 
     const back = useCallback(() => {
@@ -31,17 +36,18 @@ export const AddNewTrack = memo(() => {
             const result = await dispatch(
                 addTrack({
                     name: trackName.value,
-                    artist: artist.value,
                     audio: audio as File,
                     picture: picture as File,
                     text: text.value,
+                    artistId: artist,
                 }),
             )
+
             if (result.meta.requestStatus === 'fulfilled') {
                 router.push('/tracks')
             }
         }
-    }, [activeStep])
+    }, [activeStep, picture, audio])
 
     return (
         <>
@@ -49,8 +55,10 @@ export const AddNewTrack = memo(() => {
                 {activeStep === 0 && (
                     <StepFirst
                         trackName={trackName}
-                        artist={artist}
+                        artists={artists}
                         text={text}
+                        onChange={setArtist}
+                        artist={artist}
                     />
                 )}
                 {activeStep === 1 && (

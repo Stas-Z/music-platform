@@ -44,9 +44,6 @@ export const trackSlice = buildSlice({
     },
     extraReducers: (builder) => {
         builder
-            // .addCase(HYDRATE, (state, action: HydrateAction) => {
-            //     return { ...state, ...action.payload.track }
-            // })
             .addCase(fetchTracks.pending, (state) => {
                 state.isLoading = true
                 state.error = ''

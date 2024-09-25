@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { memo } from 'react'
 import cls from './TrackPage.module.scss'
 import { TrackList } from '@/src/entities/Track'
-import { getTrackList } from '../model/selectors/getTrack'
+import { getTrackList } from '../model/selectors/getTrackListSelectors'
 import { useAppSelector } from '@/src/shared/lib/hooks/useAppSelector/useAppSelector'
 
 const TackPage = () => {

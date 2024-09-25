@@ -1,4 +1,5 @@
 import { wrapper } from '@/src/app/providers/StoreProvider'
+import { fetchArtistsList } from '@/src/entities/Artist'
 import { fetchTracksList, TrackPage } from '@/src/pages/TrackPage'
 import { GetServerSideProps } from 'next'
 
@@ -10,5 +11,6 @@ export const getServerSideProps: GetServerSideProps =
         const dispatch = store.dispatch
 
         await dispatch(await fetchTracksList())
+        await dispatch(await fetchArtistsList())
         return { props: {} }
     })

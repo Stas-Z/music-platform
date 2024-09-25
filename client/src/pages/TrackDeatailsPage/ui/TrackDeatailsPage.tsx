@@ -3,19 +3,17 @@ import { useRouter } from 'next/router'
 import { memo } from 'react'
 import cls from './TrackDeatailsPage.module.scss'
 import { ITrack, TrackDetails } from '@/src/entities/Track'
+import { useAppSelector } from '@/src/shared/lib/hooks/useAppSelector/useAppSelector'
+import { getArtistById } from '@/src/entities/Artist'
 
-const TrackDeatailsPage = () => {
-    const track: ITrack = {
-        _id: '1',
-        name: 'Трек 1',
-        artist: 'Исполнитель 1',
-        text: 'Какой то текст',
-        listens: 5,
-        audio: '',
-        picture: '',
-        comments: [],
-    }
+interface TrackDeatailsPageProps {
+    serverTrack: ITrack
+}
+
+const TrackDeatailsPage = ({ serverTrack }: TrackDeatailsPageProps) => {
     const router = useRouter()
+    const artist = useAppSelector(getArtistById(serverTrack.artistId))
+
     return (
         <>
             <Button
@@ -25,7 +23,7 @@ const TrackDeatailsPage = () => {
             >
                 К списку
             </Button>
-            <TrackDetails track={track} />
+            <TrackDetails track={serverTrack} artist={artist?.name} />
         </>
     )
 }

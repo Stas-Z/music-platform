@@ -7,10 +7,9 @@ import { getApiURL } from '@/src/shared/lib/helpers/getApiURL/getApiURL'
 
 interface TrackListProps {
     track: ITrack
+    artist?: string
 }
-export const TrackDetails = memo(({ track }: TrackListProps) => {
-    console.log('track: ', track)
-
+export const TrackDetails = memo(({ track, artist }: TrackListProps) => {
     return (
         <>
             <Grid container className={cls.infoBlock}>
@@ -21,9 +20,7 @@ export const TrackDetails = memo(({ track }: TrackListProps) => {
                     height={200}
                 />
                 <div className={cls.info}>
-                    <h2 className={cls.artist}>
-                        Исполнитель трека - {track.artist}
-                    </h2>
+                    <h2 className={cls.artist}>Исполнитель трека - {artist}</h2>
                     <h1>Название трека - {track.name}</h1>
                     <h3>Прослушиваний: {track.listens}</h3>
                 </div>

@@ -13,6 +13,7 @@ import {
     getVolume,
 } from '@/src/entities/Track/model/selectors/getTrack'
 import { getApiURL } from '@/src/shared/lib/helpers/getApiURL/getApiURL'
+import { getArtistById } from '@/src/entities/Artist'
 
 let audio: HTMLAudioElement
 
@@ -22,6 +23,10 @@ export const Player = memo(() => {
     const duration = useAppSelector(getDuration)
     const pause = useAppSelector(getPause)
     const volume = useAppSelector(getVolume)
+
+    const artistName = useAppSelector(
+        getArtistById(activeTrack?.artistId || ''),
+    )
 
     const { setCurrentTime, setDuration, setPause, setPlay, setVolume } =
         useTrackActions()
@@ -96,7 +101,7 @@ export const Player = memo(() => {
             </IconButton>
             <Grid container direction={'column'} className={cls.rightBlock}>
                 <div>{activeTrack?.name}</div>
-                <div className={cls.artist}>{activeTrack?.artist}</div>
+                <div className={cls.artist}>{artistName?.name}</div>
             </Grid>
             <ProgressBar
                 left={currentTime}
