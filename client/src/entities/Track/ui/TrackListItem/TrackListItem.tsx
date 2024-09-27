@@ -8,17 +8,21 @@ import { useTrackActions } from '../../model/slice/trackSlice'
 import Image from 'next/image'
 import { useTrackValue } from '../../model/selectors/getTrack'
 import { getApiURL } from '@/src/shared/lib/helpers/getApiURL/getApiURL'
+import { getArtistNameById } from '@/src/entities/Artist'
+import { useAppSelector } from '@/src/shared/lib/hooks/useAppSelector/useAppSelector'
 
 interface TrackListItemProps {
     track: ITrack
     active?: boolean
+    onClick: (id: string) => void
 }
 
 export const TrackListItem = memo(
-    ({ track, active = false }: TrackListItemProps) => {
+    ({ track, active = false, onClick }: TrackListItemProps) => {
         const router = useRouter()
         const { pause, activeTrack } = useTrackValue()
         const { setPause, setPlay, setActive } = useTrackActions()
+        const artistName = useAppSelector(getArtistNameById(track.artistId))
 
         const playHandle = useCallback(
             (e: MouseEvent<HTMLButtonElement>) => {
@@ -37,6 +41,15 @@ export const TrackListItem = memo(
             [activeTrack?._id, pause, setActive, setPause, setPlay, track],
         )
 
+        const onClickHandle = useCallback(
+            (e: MouseEvent<HTMLButtonElement>) => {
+                e.stopPropagation()
+                onClick(track._id)
+                router.push('/tracks/')
+            },
+            [onClick, router, track._id],
+        )
+
         return (
             <Card
                 className={cls.track}
@@ -53,13 +66,10 @@ export const TrackListItem = memo(
                 />
                 <Grid container direction={'column'} className={cls.rightBlock}>
                     <div>{track.name}</div>
-                    <div className={cls.artist}>{track.artist}</div>
+                    <div className={cls.artist}>{artistName}</div>
                 </Grid>
                 {active && <div>02:22 / 03:22</div>}
-                <IconButton
-                    className={cls.delete}
-                    onClick={(e) => e.stopPropagation()}
-                >
+                <IconButton className={cls.delete} onClick={onClickHandle}>
                     <Delete />
                 </IconButton>
             </Card>

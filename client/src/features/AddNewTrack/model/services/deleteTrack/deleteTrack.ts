@@ -1,20 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { ITrack } from '../../types/track'
-import { ThunkConfig } from '@/src/app/providers/StoreProvider'
 
-interface FetchTrackByIdProps {
+import { ThunkConfig } from '@/src/app/providers/StoreProvider'
+import { ITrack } from '@/src/entities/Track'
+
+interface DeleteArtistProps {
     id: string | string[] | undefined
 }
 
-export const fetchTrackById = createAsyncThunk<
-    ITrack[],
-    FetchTrackByIdProps,
+export const deleteTrack = createAsyncThunk<
+    ITrack,
+    DeleteArtistProps,
     ThunkConfig<string>
->('track/fetchTrackById', async ({ id }, thunkAPI) => {
+>('addNewTrack/deleteTrack', async ({ id }, thunkAPI) => {
     const { extra, rejectWithValue } = thunkAPI
 
     try {
-        const response = await extra.api.get<ITrack[]>(`tracks/${id}`)
+        const response = await extra.api.delete<ITrack>(`tracks/${id}`)
 
         if (!response.data) {
             throw new Error()
@@ -25,6 +26,8 @@ export const fetchTrackById = createAsyncThunk<
         if (e.response && e.response.data.message) {
             return rejectWithValue(e.response.data.message)
         }
+        console.log(e.response.data.message)
+
         return rejectWithValue(e.message)
     }
 })

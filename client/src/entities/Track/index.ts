@@ -1,5 +1,3 @@
-export { fetchTracks } from './model/services/fetchTracks/fetchTracks'
-
 export { trackReducer, useTrackActions } from './model/slice/trackSlice'
 
 export { useTrackValue } from './model/selectors/getTrack'

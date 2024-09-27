@@ -1,6 +1,7 @@
-import { ArtistSchema } from '@/src/entities/Artist/model/types/artist'
+import { ArtistSchema } from '@/src/entities/Artist'
 import { TrackSchema } from '@/src/entities/Track'
-import { AddTrackSchema } from '@/src/features/AddNewTrack/model/types/addTrackSchema'
+import { AddArtistSchema } from '@/src/features/AddNewArtist'
+import { AddTrackSchema } from '@/src/features/AddNewTrack'
 import { TrackPageSchema } from '@/src/pages/TrackPage'
 import { AxiosInstance } from 'axios'
 
@@ -9,6 +10,7 @@ export interface StateSchema {
     artist: ArtistSchema
     trackPage: TrackPageSchema
     addTrack: AddTrackSchema
+    addArtist: AddArtistSchema
 }
 
 export interface ThunkExtraArg {

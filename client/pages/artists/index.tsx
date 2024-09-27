@@ -1,9 +1,11 @@
 import { wrapper } from '@/src/app/providers/StoreProvider'
 import { fetchArtistsList } from '@/src/entities/Artist'
-import { CreateNewTrackPage } from '@/src/pages/CreateNewTrackPage'
+import { ArtistsPage } from '@/src/pages/ArtistsPage'
 import { GetServerSideProps } from 'next'
 
-export default CreateNewTrackPage
+const Index = () => <ArtistsPage />
+export default Index
+
 export const getServerSideProps: GetServerSideProps =
     wrapper.getServerSideProps((store) => async (ctx) => {
         const dispatch = store.dispatch

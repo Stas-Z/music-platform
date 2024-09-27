@@ -7,3 +7,9 @@ export const getArtistById = (id: string) =>
     createSelector(getArtistList, (artists) =>
         artists.find((artist) => artist._id === id),
     )
+
+export const getArtistNameById = (id: string) =>
+    createSelector(getArtistList, (artists) => {
+        const artist = artists.find((artist) => artist._id === id)
+        return artist?.name
+    })

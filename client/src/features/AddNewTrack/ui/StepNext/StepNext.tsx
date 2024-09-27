@@ -1,5 +1,5 @@
 import { memo, useState } from 'react'
-import FileUpload from '../FileUpload/FileUpload'
+import FileUpload from '../../../../shared/ui/FileUpload/FileUpload'
 import { Button } from '@mui/material'
 import cls from './StepNext.module.scss'
 
@@ -23,7 +23,7 @@ const StepNext = ({ fileFormat, label, setFile }: StepNextProps) => {
         }
     }
     return (
-        <div>
+        <div className={cls.buttonWrapper}>
             <FileUpload setFile={handleFile} accept={fileFormat}>
                 <Button>{label}</Button>
             </FileUpload>

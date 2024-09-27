@@ -1,3 +1,10 @@
+.firstStep {
+    padding: 20px;
+}
+.input {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
 .previewWrapper {
     display: flex;
     justify-content: center;
@@ -13,4 +20,11 @@
     align-items: center;
     flex-direction: column;
     gap: 30px;
+}
+.stepContainer {
+    margin: 70px 0;
+    height: 270px;
+}
+.cardWrapper {
+    width: 600px;
 }

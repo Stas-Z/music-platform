@@ -1,8 +1,8 @@
 import { AddNewTrack } from '@/src/features/AddNewTrack'
 import { memo } from 'react'
 
-const CreatePage = () => {
+const CreateNewTrackPage = () => {
     return <AddNewTrack />
 }
 
-export default memo(CreatePage)
+export default memo(CreateNewTrackPage)

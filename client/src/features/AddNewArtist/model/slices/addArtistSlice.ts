@@ -1,44 +1,44 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { AddTrackSchema } from '../types/addTrackSchema'
-import { addTrack } from '../services/addTrack/addTrack'
-import { deleteTrack } from '../services/deleteTrack/deleteTrack'
+import { AddArtistSchema } from '../types/addArtistSchema'
+import { addArtist } from '../services/addArtist/addArtist'
+import { deleteArtist } from '../services/deleteArtist/deleteArtist'
 
-const initialState: AddTrackSchema = {
+const initialState: AddArtistSchema = {
     isLoading: false,
     onSucces: false,
     error: '',
 }
 
-export const addTrackSlice = createSlice({
-    name: 'addTrack',
+export const addArtistSlice = createSlice({
+    name: 'addArtist',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(addTrack.pending, (state) => {
+            .addCase(addArtist.pending, (state) => {
                 state.isLoading = true
                 state.onSucces = false
                 state.error = undefined
             })
-            .addCase(addTrack.fulfilled, (state) => {
+            .addCase(addArtist.fulfilled, (state) => {
                 state.isLoading = false
                 state.onSucces = true
             })
-            .addCase(addTrack.rejected, (state, action) => {
+            .addCase(addArtist.rejected, (state, action) => {
                 state.isLoading = false
                 state.onSucces = false
                 state.error = action.payload
             })
-            .addCase(deleteTrack.pending, (state) => {
+            .addCase(deleteArtist.pending, (state) => {
                 state.isLoading = true
                 state.onSucces = false
                 state.error = undefined
             })
-            .addCase(deleteTrack.fulfilled, (state) => {
+            .addCase(deleteArtist.fulfilled, (state) => {
                 state.isLoading = false
                 state.onSucces = true
             })
-            .addCase(deleteTrack.rejected, (state, action) => {
+            .addCase(deleteArtist.rejected, (state, action) => {
                 state.isLoading = false
                 state.onSucces = false
                 state.error = action.payload
@@ -46,5 +46,5 @@ export const addTrackSlice = createSlice({
     },
 })
 
-export const { actions: addTrackActions } = addTrackSlice
-export const { reducer: addTrackReducer } = addTrackSlice
+export const { actions: addArtistActions } = addArtistSlice
+export const { reducer: addArtistReducer } = addArtistSlice

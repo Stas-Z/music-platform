@@ -42,24 +42,6 @@ export const trackSlice = buildSlice({
             }
         },
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(fetchTracks.pending, (state) => {
-                state.isLoading = true
-                state.error = ''
-            })
-            .addCase(
-                fetchTracks.fulfilled,
-                (state, action: PayloadAction<ITrack[]>) => {
-                    state.isLoading = false
-                    state.tracks = action.payload
-                },
-            )
-            .addCase(fetchTracks.rejected, (state, action) => {
-                state.isLoading = false
-                state.error = action.payload
-            })
-    },
 })
 
 export const { actions: trackActions } = trackSlice

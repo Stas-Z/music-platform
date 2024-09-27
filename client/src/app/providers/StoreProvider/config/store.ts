@@ -10,15 +10,17 @@ import { createWrapper } from 'next-redux-wrapper'
 import { ThunkExtraArg } from './StateSchema'
 import { $api } from '@/src/shared/api/api'
 import { trackPageReducer, TrackPageSchema } from '@/src/pages/TrackPage'
-import { addTrackReducer } from '@/src/features/AddNewTrack/model/slices/addTrackSlice'
+import { addTrackReducer } from '@/src/features/AddNewTrack'
 import { artistReducer } from '@/src/entities/Artist'
-import { ArtistSchema } from '@/src/entities/Artist/model/types/artist'
+import { ArtistSchema } from '@/src/entities/Artist'
+import { addArtistReducer } from '@/src/features/AddNewArtist'
 
 const rootReducer = combineReducers({
     track: trackReducer,
     artist: artistReducer,
     trackPage: trackPageReducer,
     addTrack: addTrackReducer,
+    addArtist: addArtistReducer,
 })
 
 const extraArg: ThunkExtraArg = {
