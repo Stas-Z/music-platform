@@ -39,7 +39,7 @@ export const AddNewTrack = memo(() => {
                     audio: audio as File,
                     picture: picture as File,
                     text: text.value,
-                    artistId: artist,
+                    artist: artist,
                 }),
             )
 

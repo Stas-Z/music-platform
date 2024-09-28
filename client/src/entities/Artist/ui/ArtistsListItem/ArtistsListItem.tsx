@@ -26,7 +26,10 @@ export const ArtistsListItem = memo(
         )
 
         return (
-            <Card className={cls.track}>
+            <Card
+                className={cls.track}
+                onClick={() => router.push('/artists/' + artist._id)}
+            >
                 <Image
                     width={70}
                     height={70}

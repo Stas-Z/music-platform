@@ -4,16 +4,15 @@ import cls from './Player.module.scss'
 import { ProgressBar } from '@/src/shared/ui/ProgressBar'
 import { ChangeEvent, memo, useCallback, useEffect } from 'react'
 import { useTrackActions } from '@/src/entities/Track'
-import { useAppSelector } from '@/src/shared/lib/hooks/useAppSelector/useAppSelector'
 import {
     getActiveTrack,
     getCurrentTime,
     getDuration,
     getPause,
     getVolume,
-} from '@/src/entities/Track/model/selectors/getTrack'
+} from '@/src/entities/Track'
+import { useAppSelector } from '@/src/shared/lib/hooks/useAppSelector/useAppSelector'
 import { getApiURL } from '@/src/shared/lib/helpers/getApiURL/getApiURL'
-import { getArtistNameById } from '@/src/entities/Artist'
 
 let audio: HTMLAudioElement
 
@@ -23,10 +22,6 @@ export const Player = memo(() => {
     const duration = useAppSelector(getDuration)
     const pause = useAppSelector(getPause)
     const volume = useAppSelector(getVolume)
-
-    const artistName = useAppSelector(
-        getArtistNameById(activeTrack?.artistId || ''),
-    )
 
     const { setCurrentTime, setDuration, setPause, setPlay, setVolume } =
         useTrackActions()
@@ -101,7 +96,7 @@ export const Player = memo(() => {
             </IconButton>
             <Grid container direction={'column'} className={cls.rightBlock}>
                 <div>{activeTrack?.name}</div>
-                <div className={cls.artist}>{artistName}</div>
+                <div className={cls.artist}>{activeTrack?.artist.name}</div>
             </Grid>
             <ProgressBar
                 left={currentTime}

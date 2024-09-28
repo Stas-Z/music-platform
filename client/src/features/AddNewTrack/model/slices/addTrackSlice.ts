@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { AddTrackSchema } from '../types/addTrackSchema'
 import { addTrack } from '../services/addTrack/addTrack'
-import { deleteTrack } from '../services/deleteTrack/deleteTrack'
 
 const initialState: AddTrackSchema = {
     isLoading: false,
@@ -25,20 +24,6 @@ export const addTrackSlice = createSlice({
                 state.onSucces = true
             })
             .addCase(addTrack.rejected, (state, action) => {
-                state.isLoading = false
-                state.onSucces = false
-                state.error = action.payload
-            })
-            .addCase(deleteTrack.pending, (state) => {
-                state.isLoading = true
-                state.onSucces = false
-                state.error = undefined
-            })
-            .addCase(deleteTrack.fulfilled, (state) => {
-                state.isLoading = false
-                state.onSucces = true
-            })
-            .addCase(deleteTrack.rejected, (state, action) => {
                 state.isLoading = false
                 state.onSucces = false
                 state.error = action.payload

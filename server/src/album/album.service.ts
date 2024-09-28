@@ -17,14 +17,14 @@ export class AlbumService {
     ) {}
 
     async create(dto: CreateAlbumDto, picture): Promise<Album> {
-        const artist = await this.artistModel.findById(dto.artistId)
+        const artist = await this.artistModel.findById(dto.artist)
         const album = await this.albumModel.create({
             ...dto,
         })
         const picturePath = await this.fileService.createFile(
             FileType.IMAGE,
             picture,
-            dto.artistId.toString(),
+            dto.artist.toString(),
         )
         album.picture = picturePath
         await album.save()
@@ -50,7 +50,7 @@ export class AlbumService {
 
     async getByArtist(id: ObjectId): Promise<Album[]> {
         const albums = (await this.albumModel.find()).filter(
-            (album) => album.artistId.toString() === id.toString(),
+            (album) => album.artist.toString() === id.toString(),
         )
         return albums
     }
@@ -62,7 +62,7 @@ export class AlbumService {
             // Удаляем картинку альбома
             if (album.picture) {
                 await this.fileService.removeFile(
-                    album.artistId.toString(),
+                    album.artist.toString(),
                     album.picture,
                 )
             }
@@ -80,8 +80,8 @@ export class AlbumService {
             })
 
             // Удаляем id альбома у исполнителя
-            if (album.artistId) {
-                const artist = await this.artistModel.findById(album.artistId)
+            if (album.artist) {
+                const artist = await this.artistModel.findById(album.artist)
                 artist.albums = artist.albums.filter(
                     (albumId) => albumId.toString() !== album._id.toString(),
                 )

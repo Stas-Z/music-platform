@@ -1,3 +1,5 @@
+import { IArtist } from '@/src/entities/Artist'
+
 export interface IComment {
     _id: string
     username: string
@@ -7,7 +9,7 @@ export interface IComment {
 export interface ITrack {
     _id: string
     name: string
-    artistId: string
+    artist: IArtist
     text: string
     listens: number
     picture: string
@@ -22,7 +24,7 @@ export interface TrackSchema {
     currentTime: number
     pause: boolean
 
-    tracks: ITrack[]
     isLoading?: boolean
     error?: string
+    onSucces?: boolean
 }

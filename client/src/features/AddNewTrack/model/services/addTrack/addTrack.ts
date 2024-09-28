@@ -3,21 +3,21 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { ITrack } from '@/src/entities/Track'
 import { ThunkConfig } from '@/src/app/providers/StoreProvider'
 
-interface addTrackProps {
+interface AddTrackProps {
     name: string
     text: string
     picture: File
     audio: File
-    artistId: string
+    artist: string
 }
 
 export const addTrack = createAsyncThunk<
     ITrack,
-    addTrackProps,
+    AddTrackProps,
     ThunkConfig<string>
 >(
     'addNewTrack/addTrack',
-    async ({ name, text, picture, audio, artistId }, thunkAPI) => {
+    async ({ name, text, picture, audio, artist }, thunkAPI) => {
         const { extra, rejectWithValue } = thunkAPI
 
         try {
@@ -26,7 +26,7 @@ export const addTrack = createAsyncThunk<
             formData.append('picture', picture)
             formData.append('audio', audio)
             formData.append('text', text)
-            formData.append('artistId', artistId)
+            formData.append('artist', artist)
             formData.append('albumsId', '66769f8e4292af4ccf67de44')
 
             const response = await extra.api.post<ITrack>('tracks', formData)

@@ -7,3 +7,11 @@ export { TrackDetails } from './ui/TrackDetails/TrackDetails'
 export { TrackList } from './ui/TrackList/TrackList'
 
 export type { ITrack, TrackSchema } from './model/types/track'
+
+export {
+    getActiveTrack,
+    getCurrentTime,
+    getDuration,
+    getPause,
+    getVolume,
+} from './model/selectors/getTrack'

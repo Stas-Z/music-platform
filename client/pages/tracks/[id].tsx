@@ -9,7 +9,6 @@ export default TrackDeatailsPage
 export const getServerSideProps: GetServerSideProps =
     wrapper.getServerSideProps((store) => async ({ params }) => {
         const dispatch = store.dispatch
-        await dispatch(await fetchArtistsList())
         const response = await dispatch(fetchTrackById({ id: params?.id }))
 
         return {

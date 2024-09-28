@@ -12,6 +12,9 @@ export class Artist {
     @Prop()
     picture: string
 
+    @Prop()
+    text: string
+
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Album' }] })
     albums: mongoose.Types.ObjectId[]
 

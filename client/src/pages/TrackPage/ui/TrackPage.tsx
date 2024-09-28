@@ -1,25 +1,15 @@
 import { Box, Button, Card, Grid } from '@mui/material'
 import { useRouter } from 'next/router'
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import cls from './TrackPage.module.scss'
 import { TrackList } from '@/src/entities/Track'
 import { getTrackList } from '../model/selectors/getTrackListSelectors'
 import { useAppSelector } from '@/src/shared/lib/hooks/useAppSelector/useAppSelector'
-import { deleteTrack } from '@/src/features/AddNewTrack'
-import { useAppDispatch } from '@/src/shared/lib/hooks/useAppDispatch/useAppDispatch'
 
 const TackPage = () => {
     const router = useRouter()
 
     const tracks = useAppSelector(getTrackList)
-    const dispatch = useAppDispatch()
-
-    const deleteArtistHandle = useCallback(
-        (id: string) => {
-            dispatch(deleteTrack({ id }))
-        },
-        [dispatch],
-    )
 
     return (
         <Grid container justifyContent="center">
@@ -38,7 +28,7 @@ const TackPage = () => {
                         </Grid>
                     </Grid>
                 </Box>
-                <TrackList tracks={tracks} onClick={deleteArtistHandle} />
+                <TrackList tracks={tracks} />
             </Card>
         </Grid>
     )

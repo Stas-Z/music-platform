@@ -3,22 +3,24 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { ThunkConfig } from '@/src/app/providers/StoreProvider'
 import { IArtist } from '@/src/entities/Artist/model/types/artist'
 
-interface addArtistProps {
+interface AddArtistProps {
     name: string
     picture: File
+    text: string
 }
 
 export const addArtist = createAsyncThunk<
     IArtist,
-    addArtistProps,
+    AddArtistProps,
     ThunkConfig<string>
->('addNewArtist/addArtist', async ({ name, picture }, thunkAPI) => {
+>('addNewArtist/addArtist', async ({ name, picture, text }, thunkAPI) => {
     const { extra, rejectWithValue } = thunkAPI
 
     try {
         const formData = new FormData()
         formData.append('name', name)
         formData.append('picture', picture)
+        formData.append('text', text)
 
         const response = await extra.api.post<IArtist>('artists', formData)
 

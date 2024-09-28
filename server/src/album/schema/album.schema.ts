@@ -10,7 +10,7 @@ export class Album {
     name: string
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Artist' })
-    artistId: mongoose.Types.ObjectId
+    artist: mongoose.Types.ObjectId
 
     @Prop()
     picture: string

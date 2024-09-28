@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { ITrack } from '@/src/entities/Track'
 import { buildSlice } from '@/src/shared/lib/store'
 import { TrackSchema } from '../types/track'
-import { fetchTracks } from '../services/fetchTracks/fetchTracks'
+import { deleteTrack } from '../services/deleteTrack/deleteTrack'
 
 const initialState: TrackSchema = {
     activeTrack: null,
@@ -10,7 +10,6 @@ const initialState: TrackSchema = {
     duration: 0,
     volume: 50,
     pause: true,
-    tracks: [],
     error: '',
     isLoading: false,
 }
@@ -41,6 +40,23 @@ export const trackSlice = buildSlice({
                 state.pause = true
             }
         },
+    },
+    extraReducers(builder) {
+        builder
+            .addCase(deleteTrack.pending, (state) => {
+                state.isLoading = true
+                state.onSucces = false
+                state.error = undefined
+            })
+            .addCase(deleteTrack.fulfilled, (state) => {
+                state.isLoading = false
+                state.onSucces = true
+            })
+            .addCase(deleteTrack.rejected, (state, action) => {
+                state.isLoading = false
+                state.onSucces = false
+                state.error = action.payload
+            })
     },
 })
 

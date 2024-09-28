@@ -8,21 +8,20 @@ import { useTrackActions } from '../../model/slice/trackSlice'
 import Image from 'next/image'
 import { useTrackValue } from '../../model/selectors/getTrack'
 import { getApiURL } from '@/src/shared/lib/helpers/getApiURL/getApiURL'
-import { getArtistNameById } from '@/src/entities/Artist'
-import { useAppSelector } from '@/src/shared/lib/hooks/useAppSelector/useAppSelector'
+import { useAppDispatch } from '@/src/shared/lib/hooks/useAppDispatch/useAppDispatch'
+import { deleteTrack } from '../../model/services/deleteTrack/deleteTrack'
 
 interface TrackListItemProps {
     track: ITrack
     active?: boolean
-    onClick: (id: string) => void
 }
 
 export const TrackListItem = memo(
-    ({ track, active = false, onClick }: TrackListItemProps) => {
+    ({ track, active = false }: TrackListItemProps) => {
         const router = useRouter()
+        const dispatch = useAppDispatch()
         const { pause, activeTrack } = useTrackValue()
         const { setPause, setPlay, setActive } = useTrackActions()
-        const artistName = useAppSelector(getArtistNameById(track.artistId))
 
         const playHandle = useCallback(
             (e: MouseEvent<HTMLButtonElement>) => {
@@ -41,13 +40,13 @@ export const TrackListItem = memo(
             [activeTrack?._id, pause, setActive, setPause, setPlay, track],
         )
 
-        const onClickHandle = useCallback(
+        const deleteTrackHandle = useCallback(
             (e: MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation()
-                onClick(track._id)
+                dispatch(deleteTrack({ id: track._id }))
                 router.push('/tracks/')
             },
-            [onClick, router, track._id],
+            [dispatch, router, track._id],
         )
 
         return (
@@ -66,10 +65,10 @@ export const TrackListItem = memo(
                 />
                 <Grid container direction={'column'} className={cls.rightBlock}>
                     <div>{track.name}</div>
-                    <div className={cls.artist}>{artistName}</div>
+                    <div className={cls.artist}>{track.artist?.name}</div>
                 </Grid>
                 {active && <div>02:22 / 03:22</div>}
-                <IconButton className={cls.delete} onClick={onClickHandle}>
+                <IconButton className={cls.delete} onClick={deleteTrackHandle}>
                     <Delete />
                 </IconButton>
             </Card>

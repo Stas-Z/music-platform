@@ -12,7 +12,7 @@ export const AddNewArtist = memo(() => {
     const router = useRouter()
 
     const artistName = useInput('')
-    console.log('artistName: ', artistName)
+    const artistText = useInput('')
 
     const [picture, setPicture] = useState<File | null>(null)
     const [preview, setPreview] = useState<string | null>(null)
@@ -21,7 +21,7 @@ export const AddNewArtist = memo(() => {
         const result = await dispatch(
             addArtist({
                 name: artistName.value,
-
+                text: artistText.value,
                 picture: picture as File,
             }),
         )
@@ -72,9 +72,25 @@ export const AddNewArtist = memo(() => {
                                 </div>
                             )}
                         </div>
-                    </Grid>
-                    <Grid container direction={'row'} justifyContent={'end'}>
-                        <Button onClick={addArtistHandler}>Добавить</Button>
+                        <TextField
+                            {...artistText}
+                            label="Об исполнителе"
+                            className={cls.input}
+                            multiline
+                            rows={3}
+                        />
+                        <Grid
+                            container
+                            direction={'row'}
+                            justifyContent={'end'}
+                        >
+                            <Button
+                                variant="outlined"
+                                onClick={addArtistHandler}
+                            >
+                                Добавить
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Card>
             </Grid>

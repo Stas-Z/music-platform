@@ -39,8 +39,11 @@ export class ArtistService {
     }
 
     async getOne(id: ObjectId): Promise<Artist> {
-        const track = (await this.artistModel.findById(id)).populate('albums')
-        return track
+        const artist = await this.artistModel
+            .findById(id)
+            .populate('albums')
+            .populate('tracks')
+        return artist
     }
 
     async delete(id: ObjectId): Promise<Types.ObjectId | { error: string }> {

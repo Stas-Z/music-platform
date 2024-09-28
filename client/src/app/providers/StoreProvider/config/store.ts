@@ -1,4 +1,4 @@
-import { trackReducer } from '@/src/entities/Track'
+import { trackReducer, TrackSchema } from '@/src/entities/Track'
 import {
     Action,
     combineReducers,
@@ -14,11 +14,16 @@ import { addTrackReducer } from '@/src/features/AddNewTrack'
 import { artistReducer } from '@/src/entities/Artist'
 import { ArtistSchema } from '@/src/entities/Artist'
 import { addArtistReducer } from '@/src/features/AddNewArtist'
+import {
+    trackDetailsPageReducer,
+    TrackDetailsPageSchema,
+} from '@/src/pages/TrackDeatailsPage'
 
 const rootReducer = combineReducers({
     track: trackReducer,
     artist: artistReducer,
     trackPage: trackPageReducer,
+    trackDetailsPage: trackDetailsPageReducer,
     addTrack: addTrackReducer,
     addArtist: addArtistReducer,
 })
@@ -49,7 +54,9 @@ export interface HydrateAction
     extends Action<'__NEXT_REDUX_WRAPPER_HYDRATE__'> {
     payload: {
         trackPage: TrackPageSchema
+        trackDetailsPage: TrackDetailsPageSchema
         artist: ArtistSchema
+        track: TrackSchema
     }
 }
 

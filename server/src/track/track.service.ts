@@ -23,12 +23,12 @@ export class TrackService {
         const audioPath = this.fileService.createFile(
             FileType.AUDIO,
             audio,
-            dto.artistId.toString(),
+            dto.artist.toString(),
         )
         const picturePath = this.fileService.createFile(
             FileType.IMAGE,
             picture,
-            dto.artistId.toString(),
+            dto.artist.toString(),
         )
         const track = await this.trackModel.create({
             ...dto,
@@ -37,7 +37,7 @@ export class TrackService {
             picture: picturePath,
         })
 
-        const artist = await this.artistModel.findById(dto.artistId)
+        const artist = await this.artistModel.findById(dto.artist)
         artist.tracks.push(track._id)
         await artist.save()
 
@@ -63,6 +63,7 @@ export class TrackService {
     async getAll(count = 10, offset = 0): Promise<Track[]> {
         const tracks = await this.trackModel
             .find()
+            .populate('artist')
             .skip(Number(offset))
             .limit(Number(count))
         return tracks
@@ -76,13 +77,16 @@ export class TrackService {
     }
 
     async getOne(id: ObjectId): Promise<Track> {
-        const track = (await this.trackModel.findById(id)).populate('comments')
+        const track = await this.trackModel
+            .findById(id)
+            .populate('artist')
+            .populate('comments')
         return track
     }
 
     async getByArtist(id: ObjectId): Promise<Track[]> {
         const tracks = (await this.trackModel.find()).filter(
-            (track) => track.artistId.toString() === id.toString(),
+            (track) => track.artist.toString() === id.toString(),
         )
 
         return tracks
@@ -95,14 +99,14 @@ export class TrackService {
             // Удаляем аудио трека
             if (track.audio) {
                 await this.fileService.removeFile(
-                    track.artistId.toString(),
+                    track.artist.toString(),
                     track.audio,
                 )
             }
             // Удаляем картинку трека
             if (track.picture) {
                 await this.fileService.removeFile(
-                    track.artistId.toString(),
+                    track.artist.toString(),
                     track.picture,
                 )
             }
@@ -128,8 +132,8 @@ export class TrackService {
                 })
             }
             // Удаляем id трека у исполнителя
-            if (track.artistId) {
-                const artist = await this.artistModel.findById(track.artistId)
+            if (track.artist) {
+                const artist = await this.artistModel.findById(track.artist)
                 artist.tracks = artist.tracks.filter(
                     (trackId) => trackId.toString() !== track._id.toString(),
                 )

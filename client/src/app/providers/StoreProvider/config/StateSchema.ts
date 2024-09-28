@@ -2,6 +2,7 @@ import { ArtistSchema } from '@/src/entities/Artist'
 import { TrackSchema } from '@/src/entities/Track'
 import { AddArtistSchema } from '@/src/features/AddNewArtist'
 import { AddTrackSchema } from '@/src/features/AddNewTrack'
+import { TrackDetailsPageSchema } from '@/src/pages/TrackDeatailsPage'
 import { TrackPageSchema } from '@/src/pages/TrackPage'
 import { AxiosInstance } from 'axios'
 
@@ -9,6 +10,7 @@ export interface StateSchema {
     track: TrackSchema
     artist: ArtistSchema
     trackPage: TrackPageSchema
+    trackDetailsPage: TrackDetailsPageSchema
     addTrack: AddTrackSchema
     addArtist: AddArtistSchema
 }

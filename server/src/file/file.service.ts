@@ -10,7 +10,7 @@ export enum FileType {
 
 @Injectable()
 export class FileService {
-    createFile(type: FileType, file, artistId: string): string {
+    createFile(type: FileType, file, artist: string): string {
         try {
             const fileExtension = file.originalname.split('.').pop()
             const fileName = `${uuid.v4()}.${fileExtension}`
@@ -19,32 +19,32 @@ export class FileService {
                 __dirname,
                 '..',
                 'static',
-                artistId,
+                artist,
                 type,
             )
             if (!fs.existsSync(filePath)) {
                 fs.mkdirSync(filePath, { recursive: true })
             }
             fs.writeFileSync(path.resolve(filePath, fileName), file.buffer)
-            return `${artistId}/${type}/${fileName}`
+            return `${artist}/${type}/${fileName}`
         } catch (e) {
             throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
-    removeFile(artistId: string, filePath?: string) {
+    removeFile(artist: string, filePath?: string) {
         const fullFilePath = path.resolve(
             __dirname,
             '..',
             'static',
-            artistId,
+            artist,
             filePath,
         )
         fs.unlinkSync(fullFilePath)
     }
 
-    removeAllFiles(artistId: string) {
-        const fullFilePath = path.resolve(__dirname, '..', 'static', artistId)
+    removeAllFiles(artist: string) {
+        const fullFilePath = path.resolve(__dirname, '..', 'static', artist)
 
         if (fs.existsSync(fullFilePath)) {
             fs.readdirSync(fullFilePath).forEach((fileItem) => {

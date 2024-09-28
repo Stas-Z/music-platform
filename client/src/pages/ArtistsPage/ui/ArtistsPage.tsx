@@ -4,9 +4,9 @@ import { memo, useCallback } from 'react'
 import cls from './ArtistsPage.module.scss'
 import { useAppSelector } from '@/src/shared/lib/hooks/useAppSelector/useAppSelector'
 import { getArtistList } from '@/src/entities/Artist'
-import { ArtistsListItem } from '@/src/entities/Artist'
 import { useAppDispatch } from '@/src/shared/lib/hooks/useAppDispatch/useAppDispatch'
 import { deleteArtist } from '@/src/features/AddNewArtist'
+import { ArtistsList } from '@/src/entities/Artist'
 
 const ArtistsPage = () => {
     const router = useRouter()
@@ -32,19 +32,7 @@ const ArtistsPage = () => {
                         </Button>
                     </Grid>
                 </Box>
-                <Grid container direction="column">
-                    <Box p={2}>
-                        {artists.map((artist) => {
-                            return (
-                                <ArtistsListItem
-                                    key={artist._id}
-                                    artist={artist}
-                                    onClick={deleteArtistHandle}
-                                />
-                            )
-                        })}
-                    </Box>
-                </Grid>
+                <ArtistsList artists={artists} onClick={deleteArtistHandle} />
             </Card>
         </Grid>
     )
