@@ -91,6 +91,13 @@ export class TrackService {
 
         return tracks
     }
+    async getByAlbum(id: ObjectId): Promise<Track[]> {
+        const tracks = (await this.trackModel.find()).filter(
+            (track) => track.albumsId.toString() === id.toString(),
+        )
+
+        return tracks
+    }
 
     async delete(id: ObjectId): Promise<Types.ObjectId | { error: string }> {
         const track = await this.trackModel.findByIdAndDelete(id)
@@ -98,17 +105,12 @@ export class TrackService {
         try {
             // Удаляем аудио трека
             if (track.audio) {
-                await this.fileService.removeFile(
-                    track.artist.toString(),
-                    track.audio,
-                )
+                await this.fileService.removeFile(track.audio)
             }
+
             // Удаляем картинку трека
             if (track.picture) {
-                await this.fileService.removeFile(
-                    track.artist.toString(),
-                    track.picture,
-                )
+                await this.fileService.removeFile(track.picture)
             }
             // Удаляем коменты к трекам
             if (track.comments) {
@@ -117,19 +119,16 @@ export class TrackService {
                         await this.commentModel.findByIdAndDelete(comment),
                 )
             }
-
             // Удаляем id трека из альбомов
             if (track.albumsId) {
-                track.albumsId.forEach(async (albumId) => {
-                    const album = await this.albumModel.findById(albumId)
+                const album = await this.albumModel.findById(track.albumsId)
 
-                    if (album && album.tracks) {
-                        album.tracks = album.tracks.filter((trackId) => {
-                            return trackId.toString() !== track._id.toString()
-                        })
-                        await album.save()
-                    }
-                })
+                if (album && album.tracks) {
+                    album.tracks = album.tracks.filter((trackId) => {
+                        return trackId.toString() !== track._id.toString()
+                    })
+                    await album.save()
+                }
             }
             // Удаляем id трека у исполнителя
             if (track.artist) {

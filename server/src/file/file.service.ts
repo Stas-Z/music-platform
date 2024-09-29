@@ -32,14 +32,8 @@ export class FileService {
         }
     }
 
-    removeFile(artist: string, filePath?: string) {
-        const fullFilePath = path.resolve(
-            __dirname,
-            '..',
-            'static',
-            artist,
-            filePath,
-        )
+    removeFile(filePath?: string) {
+        const fullFilePath = path.resolve(__dirname, '..', 'static', filePath)
         fs.unlinkSync(fullFilePath)
     }
 

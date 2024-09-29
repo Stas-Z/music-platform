@@ -5,20 +5,13 @@ import { ArtistsListItem } from '../ArtistsListItem/ArtistsListItem'
 
 interface ArtistsListProps {
     artists: IArtist[]
-    onClick: (id: string) => void
 }
-export const ArtistsList = memo(({ artists, onClick }: ArtistsListProps) => {
+export const ArtistsList = memo(({ artists }: ArtistsListProps) => {
     return (
         <Grid container direction="column">
             <Box p={2}>
                 {artists.map((artist) => {
-                    return (
-                        <ArtistsListItem
-                            key={artist._id}
-                            artist={artist}
-                            onClick={onClick}
-                        />
-                    )
+                    return <ArtistsListItem key={artist._id} artist={artist} />
                 })}
             </Box>
         </Grid>

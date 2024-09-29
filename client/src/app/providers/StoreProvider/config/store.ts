@@ -1,4 +1,4 @@
-import { trackReducer, TrackSchema } from '@/src/entities/Track'
+import { trackReducer } from '@/src/entities/Track'
 import {
     Action,
     combineReducers,
@@ -12,12 +12,18 @@ import { $api } from '@/src/shared/api/api'
 import { trackPageReducer, TrackPageSchema } from '@/src/pages/TrackPage'
 import { addTrackReducer } from '@/src/features/AddNewTrack'
 import { artistReducer } from '@/src/entities/Artist'
-import { ArtistSchema } from '@/src/entities/Artist'
 import { addArtistReducer } from '@/src/features/AddNewArtist'
 import {
     trackDetailsPageReducer,
     TrackDetailsPageSchema,
 } from '@/src/pages/TrackDeatailsPage'
+import { artistPageReducer, ArtistsPageSchema } from '@/src/pages/ArtistsPage'
+import {
+    artistDetailsPageReducer,
+    ArtistDetailsPageSchema,
+} from '@/src/pages/ArtistDeatailsPage'
+import { albumReducer } from '@/src/entities/Album'
+import { addAlbumReducer } from '@/src/features/AddNewAlbum'
 
 const rootReducer = combineReducers({
     track: trackReducer,
@@ -26,6 +32,10 @@ const rootReducer = combineReducers({
     trackDetailsPage: trackDetailsPageReducer,
     addTrack: addTrackReducer,
     addArtist: addArtistReducer,
+    artistPage: artistPageReducer,
+    artistDetailsPage: artistDetailsPageReducer,
+    album: albumReducer,
+    addAlbum: addAlbumReducer,
 })
 
 const extraArg: ThunkExtraArg = {
@@ -55,8 +65,8 @@ export interface HydrateAction
     payload: {
         trackPage: TrackPageSchema
         trackDetailsPage: TrackDetailsPageSchema
-        artist: ArtistSchema
-        track: TrackSchema
+        artistPage: ArtistsPageSchema
+        artistDetailsPage: ArtistDetailsPageSchema
     }
 }
 

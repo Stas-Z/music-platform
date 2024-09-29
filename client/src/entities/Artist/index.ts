@@ -1,4 +1,4 @@
-export { fetchArtistById } from './model/services/fetchArtistById/fetchArtistById'
+export { getCurrentArtistSelector } from './model/selectors/getArtistSelector'
 
 export { ArtistDetails } from './ui/ArtistDetails/ArtistDetails'
 
@@ -8,12 +8,4 @@ export { ArtistsListItem } from './ui/ArtistsListItem/ArtistsListItem'
 
 export type { ArtistSchema, IArtist } from './model/types/artist'
 
-export {
-    getArtistById,
-    getArtistNameById,
-    getArtistList,
-} from './model/services/selectors/getArtistsSelectors'
-
-export { artistReducer } from './model/services/slice/artistSlice'
-
-export { fetchArtistsList } from './model/services/fetchArtistsList/fetchArtistsList'
+export { artistReducer, artistActions } from './model/slice/artistSlice'

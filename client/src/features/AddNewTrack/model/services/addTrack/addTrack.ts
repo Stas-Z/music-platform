@@ -9,6 +9,7 @@ interface AddTrackProps {
     picture: File
     audio: File
     artist: string
+    albumsId: string
 }
 
 export const addTrack = createAsyncThunk<
@@ -17,7 +18,7 @@ export const addTrack = createAsyncThunk<
     ThunkConfig<string>
 >(
     'addNewTrack/addTrack',
-    async ({ name, text, picture, audio, artist }, thunkAPI) => {
+    async ({ name, text, picture, audio, artist, albumsId }, thunkAPI) => {
         const { extra, rejectWithValue } = thunkAPI
 
         try {
@@ -27,7 +28,7 @@ export const addTrack = createAsyncThunk<
             formData.append('audio', audio)
             formData.append('text', text)
             formData.append('artist', artist)
-            formData.append('albumsId', '66769f8e4292af4ccf67de44')
+            formData.append('albumsId', albumsId)
 
             const response = await extra.api.post<ITrack>('tracks', formData)
 

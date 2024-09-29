@@ -1,3 +1,4 @@
+import { IAlbum } from '@/src/entities/Album'
 import { ITrack } from '@/src/entities/Track'
 
 export interface IArtist {
@@ -5,13 +6,13 @@ export interface IArtist {
     name: string
     picture: string
     text?: string
-    albums?: string
+    albums?: IAlbum[]
     tracks?: ITrack[]
 }
 
 export interface ArtistSchema {
-    artist: IArtist | null
-    artists: IArtist[]
+    artist?: IArtist | null
     isLoading?: boolean
     error?: string
+    onSucces?: boolean
 }

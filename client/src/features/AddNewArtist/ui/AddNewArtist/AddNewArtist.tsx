@@ -29,7 +29,7 @@ export const AddNewArtist = memo(() => {
         if (result.meta.requestStatus === 'fulfilled') {
             router.push('/artists')
         }
-    }, [picture])
+    }, [picture, artistText.value, artistName.value])
 
     const handleFile = useCallback((file: File) => {
         setPicture(file)

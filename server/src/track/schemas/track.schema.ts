@@ -13,7 +13,7 @@ export class Track {
     artist: mongoose.Types.ObjectId
 
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Album' }] })
-    albumsId: mongoose.Types.ObjectId[]
+    albumsId: mongoose.Types.ObjectId
 
     @Prop()
     text: string

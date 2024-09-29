@@ -15,6 +15,7 @@ export const addArtist = createAsyncThunk<
     ThunkConfig<string>
 >('addNewArtist/addArtist', async ({ name, picture, text }, thunkAPI) => {
     const { extra, rejectWithValue } = thunkAPI
+    console.log('text: ', text)
 
     try {
         const formData = new FormData()

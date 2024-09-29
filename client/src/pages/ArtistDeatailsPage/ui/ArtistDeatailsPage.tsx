@@ -5,6 +5,7 @@ import cls from './ArtistDeatailsPage.module.scss'
 import { ArtistDetails } from '@/src/entities/Artist'
 import { IArtist } from '@/src/entities/Artist/model/types/artist'
 import { TrackList } from '@/src/entities/Track'
+import { AlbumList } from '@/src/entities/Album/ui/AlbumList/AlbumList'
 
 interface ArtistDeatailsPagePageProps {
     serverArtist: IArtist
@@ -23,7 +24,12 @@ const ArtistDeatailsPage = ({ serverArtist }: ArtistDeatailsPagePageProps) => {
                 К списку
             </Button>
             <ArtistDetails artist={serverArtist} />
-            <h1>Треки</h1>
+            <h2>Дискография</h2>
+            <AlbumList
+                albums={serverArtist.albums || []}
+                artist={serverArtist}
+            />
+            <h2>Все треки</h2>
             <TrackList tracks={serverArtist.tracks || []} />
         </>
     )

@@ -10,7 +10,7 @@ export const fetchTrackById = createAsyncThunk<
     ITrack,
     FetchTrackByIdProps,
     ThunkConfig<string>
->('track/fetchTrackById', async ({ id }, thunkAPI) => {
+>('trackDetailsPage/fetchTrackById', async ({ id }, thunkAPI) => {
     const { extra, rejectWithValue } = thunkAPI
 
     try {

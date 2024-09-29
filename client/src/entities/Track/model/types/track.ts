@@ -1,3 +1,4 @@
+import { IAlbum } from '@/src/entities/Album'
 import { IArtist } from '@/src/entities/Artist'
 
 export interface IComment {
@@ -10,6 +11,7 @@ export interface ITrack {
     _id: string
     name: string
     artist: IArtist
+    albumsId: IAlbum
     text: string
     listens: number
     picture: string

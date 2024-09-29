@@ -6,6 +6,7 @@ import { FileService, FileType } from 'src/file/file.service'
 import { CreateAlbumDto } from './dto/create-album.dto'
 import { Artist, ArtistDocument } from 'src/artist/schema/artist.schema'
 import { Track, TrackDocument } from 'src/track/schemas/track.schema'
+import { Comment, CommentDocument } from 'src/track/schemas/comment.schema'
 
 @Injectable()
 export class AlbumService {
@@ -13,6 +14,7 @@ export class AlbumService {
         @InjectModel(Album.name) private albumModel: Model<AlbumDocument>,
         @InjectModel(Artist.name) private artistModel: Model<ArtistDocument>,
         @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
+        @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
         private fileService: FileService,
     ) {}
 
@@ -61,22 +63,36 @@ export class AlbumService {
         try {
             // Удаляем картинку альбома
             if (album.picture) {
-                await this.fileService.removeFile(
-                    album.artist.toString(),
-                    album.picture,
-                )
+                await this.fileService.removeFile(album.picture)
             }
-            // Удаляем id альбома у треков
-            album.tracks.forEach(async (trackId) => {
-                const track = await this.trackModel.findById(trackId)
 
-                if (track && track.albumsId) {
-                    track.albumsId = track.albumsId.filter(
-                        (albumId) =>
-                            albumId.toString() !== album._id.toString(),
-                    )
-                    await track.save()
-                }
+            // Удаляем фаилы треков
+            if (album.tracks) {
+                album.tracks.forEach(async (albumsTrack) => {
+                    const track = await this.trackModel.findById(albumsTrack)
+                    // Удаляем аудио трека
+                    if (track.audio) {
+                        await this.fileService.removeFile(track.audio)
+                    }
+                    // Удаляем картинку трека
+                    if (track.picture) {
+                        await this.fileService.removeFile(track.picture)
+                    }
+                    // Удаляем коменты к трекам
+                    if (track.comments) {
+                        track.comments.forEach(
+                            async (comment) =>
+                                await this.commentModel.findByIdAndDelete(
+                                    comment,
+                                ),
+                        )
+                    }
+                })
+            }
+
+            // Удаляем треки которые относятся к альбому
+            album.tracks.forEach(async (trackId) => {
+                await this.trackModel.findByIdAndDelete(trackId)
             })
 
             // Удаляем id альбома у исполнителя
@@ -84,6 +100,15 @@ export class AlbumService {
                 const artist = await this.artistModel.findById(album.artist)
                 artist.albums = artist.albums.filter(
                     (albumId) => albumId.toString() !== album._id.toString(),
+                )
+                await artist.save()
+            }
+
+            // Удаляем id треков у исполнителя
+            if (album.artist) {
+                const artist = await this.artistModel.findById(album.artist)
+                artist.tracks = artist.tracks.filter(
+                    (trackId) => !album.tracks.includes(trackId),
                 )
                 await artist.save()
             }

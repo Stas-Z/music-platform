@@ -8,7 +8,8 @@ import { addTrack } from '../../model/services/addTrack/addTrack'
 import { useAppDispatch } from '@/src/shared/lib/hooks/useAppDispatch/useAppDispatch'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { getArtistList } from '@/src/entities/Artist/model/services/selectors/getArtistsSelectors'
+import { getCurrentArtistSelector } from '@/src/entities/Artist'
+import { getCurrentAlbumSelector } from '@/src/entities/Album'
 
 export const AddNewTrack = memo(() => {
     const [activeStep, setActiveStep] = useState(0)
@@ -16,14 +17,14 @@ export const AddNewTrack = memo(() => {
     const dispatch = useAppDispatch()
     const router = useRouter()
 
-    const [artist, setArtist] = useState('')
     const [picture, setPicture] = useState<File | null>(null)
     const [audio, setAudio] = useState<File | null>(null)
 
-    const artists = useSelector(getArtistList)
-
     const trackName = useInput('')
     const text = useInput('')
+
+    const currentArtist = useSelector(getCurrentArtistSelector)
+    const currentALbum = useSelector(getCurrentAlbumSelector)
 
     const back = useCallback(() => {
         setActiveStep((prev) => prev - 1)
@@ -39,12 +40,13 @@ export const AddNewTrack = memo(() => {
                     audio: audio as File,
                     picture: picture as File,
                     text: text.value,
-                    artist: artist,
+                    artist: currentArtist?._id || '',
+                    albumsId: currentALbum?._id || '',
                 }),
             )
 
             if (result.meta.requestStatus === 'fulfilled') {
-                router.push('/tracks')
+                router.push('/artists/' + currentArtist?._id)
             }
         }
     }, [activeStep, picture, audio])
@@ -55,10 +57,9 @@ export const AddNewTrack = memo(() => {
                 {activeStep === 0 && (
                     <StepFirst
                         trackName={trackName}
-                        artists={artists}
                         text={text}
-                        onChange={setArtist}
-                        artist={artist}
+                        currentArtist={currentArtist}
+                        currentALbum={currentALbum}
                     />
                 )}
                 {activeStep === 1 && (

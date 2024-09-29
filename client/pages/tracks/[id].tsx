@@ -1,7 +1,8 @@
 import { wrapper } from '@/src/app/providers/StoreProvider'
-import { fetchArtistsList } from '@/src/entities/Artist'
-import { fetchTrackById } from '@/src/entities/Track/model/services/fetchTrackById/fetchTrackById'
-import { TrackDeatailsPage } from '@/src/pages/TrackDeatailsPage'
+import {
+    fetchTrackById,
+    TrackDeatailsPage,
+} from '@/src/pages/TrackDeatailsPage'
 import { GetServerSideProps } from 'next'
 
 export default TrackDeatailsPage

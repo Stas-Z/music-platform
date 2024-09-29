@@ -1,6 +1,5 @@
-import { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ITrack } from '@/src/entities/Track'
-import { buildSlice } from '@/src/shared/lib/store'
 import { HYDRATE } from 'next-redux-wrapper'
 import { HydrateAction } from '@/src/app/providers/StoreProvider'
 import { TrackPageSchema } from '../types/trackPageSchema'
@@ -11,8 +10,8 @@ const initialState: TrackPageSchema = {
     error: '',
     isLoading: false,
 }
-export const trackPageSlice = buildSlice({
-    name: 'track',
+export const trackPageSlice = createSlice({
+    name: 'trackPage',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -40,4 +39,3 @@ export const trackPageSlice = buildSlice({
 
 export const { actions: trackPageActions } = trackPageSlice
 export const { reducer: trackPageReducer } = trackPageSlice
-export const { useActions: usetrackPageActions } = trackPageSlice

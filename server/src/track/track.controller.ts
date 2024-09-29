@@ -52,6 +52,11 @@ export class TrackController {
         return this.trackService.getByArtist(id)
     }
 
+    @Get('/album/:id')
+    getByAlbum(@Param('id') id: ObjectId) {
+        return this.trackService.getByAlbum(id)
+    }
+
     @Delete(':id')
     delete(@Param('id') id: ObjectId) {
         return this.trackService.delete(id)

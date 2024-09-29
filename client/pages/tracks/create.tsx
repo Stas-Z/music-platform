@@ -1,6 +1,6 @@
 import { wrapper } from '@/src/app/providers/StoreProvider'
-import { fetchArtistsList } from '@/src/entities/Artist'
-import { CreateNewTrackPage } from '@/src/pages/CreateNewTrackPage'
+import { fetchArtistsList } from '@/src/pages/ArtistsPage'
+import { CreateNewTrackPage } from '@/src/pages/TrackPage'
 import { GetServerSideProps } from 'next'
 
 export default CreateNewTrackPage

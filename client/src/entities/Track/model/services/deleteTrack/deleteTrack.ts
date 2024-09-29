@@ -11,7 +11,7 @@ export const deleteTrack = createAsyncThunk<
     ITrack,
     DeleteArtistProps,
     ThunkConfig<string>
->('addNewTrack/deleteTrack', async ({ id }, thunkAPI) => {
+>('track/deleteTrack', async ({ id }, thunkAPI) => {
     const { extra, rejectWithValue } = thunkAPI
 
     try {
